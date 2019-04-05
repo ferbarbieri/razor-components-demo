@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28729.10
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorRecrutamento.Web.RazorComponents", "RazorRecrutamento.Web.RazorComponents\RazorRecrutamento.Web.RazorComponents.csproj", "{7719D50F-C474-4C63-ABAC-B54A1D2A9D62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RazorRecrutamento.Core", "RazorRecrutamento.Core\RazorRecrutamento.Core.csproj", "{05B3F63F-541F-4523-BA31-2A41B9AFC2E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7719D50F-C474-4C63-ABAC-B54A1D2A9D62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7719D50F-C474-4C63-ABAC-B54A1D2A9D62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7719D50F-C474-4C63-ABAC-B54A1D2A9D62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7719D50F-C474-4C63-ABAC-B54A1D2A9D62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05B3F63F-541F-4523-BA31-2A41B9AFC2E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05B3F63F-541F-4523-BA31-2A41B9AFC2E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05B3F63F-541F-4523-BA31-2A41B9AFC2E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05B3F63F-541F-4523-BA31-2A41B9AFC2E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B0AA753-4238-4B6C-81E8-8E8255DC6B39}
+	EndGlobalSection
+EndGlobal
