@@ -1,0 +1,127 @@
+﻿@page "/Candidatar/{IdVaga:int}"
+@inject CandidatosService CandidatosService
+@inject VagasService VagasService
+@inject IUriHelper UriHelper
+
+
+@if (!finalizado)
+{
+
+    <div class="container">
+
+        @if (!string.IsNullOrEmpty(Mensagem))
+        {
+            <div class="alert alert-dismissible alert-danger">@Mensagem</div>
+        }
+
+        <h2>Vaga: <span class="texto-destaque">@Vaga.Nome</span> </h2>
+        <hr />
+
+        <div class="row mt-5">
+            <div class="col-md-5">
+                <h4 class="texto-destaque">Instruções:</h4>
+                <ol>
+                    <li>
+                        Informe seu nome e email
+                    </li>
+                    <li>
+                        Faça um resumo das suas qualificações e explique por que você quer fazer parte do nosso time
+                    </li>
+                    <li>
+                        Baixe o teste prático e entregue em 5 dias
+                    </li>
+                    <li>
+                        Faça a entrevista e pronto!
+                    </li>
+                </ol>
+            </div>
+            <div class="col-md-7">
+
+                <div class="form-group">
+                    <label for="nome" class="control-label">Nome</label>
+                    <input class="form-control" bind="@Candidato.Nome" />
+                </div>
+
+                <div class="form-group">
+                    <label for="nome" class="control-label">E-mail</label>
+                    <input class="form-control" bind="@Candidato.Email" />
+                </div>
+
+
+                <div class="form-group">
+                    <label for="descricao" class="control-label">Resumo de qualificações:</label>
+                    <textarea rows="15" class="form-control" bind="@Candidato.Descricao"></textarea>
+                </div>
+
+
+
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="@Salvar">Enviar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+else
+{
+
+    <div class="page-dark pattern">
+        <div class="container text-center">
+            <h1>Obrigado, @Candidato.Nome</h1>
+            
+            <img class="img-small" src="/img/service-2.svg" />
+
+            <p>Você se inscreveu com sucesso para a vaga @Vaga.Nome.</p>
+            <p>Aguarde que iremos entrar em contato para o envio do teste e agendamento da entrevista.</p>
+            <h3><strong>Boa Sorte!</strong></h3>
+            
+        </div>
+    </div>
+}
+
+
+@functions{
+
+    Candidato Candidato;
+
+    Vaga Vaga = new Vaga();
+
+    [Parameter]
+    public int IdVaga { get; set; }
+
+    string Mensagem { get; set; }
+
+    bool finalizado = false;
+
+    /// <summary>
+    /// Salva o candidato
+    /// </summary>
+    /// <returns></returns>
+    protected async Task Salvar()
+    {
+        Vaga vaga = null;
+
+        if (IdVaga == 0)
+        {
+            Mensagem = "Você deve selecionar uma vaga.";
+            return;
+        }
+
+        vaga = await VagasService.ObterVaga(IdVaga);
+
+        Candidato.Vaga = vaga;
+
+        await CandidatosService.AdicionarCandidato(Candidato);
+
+        finalizado = true;
+
+    }
+
+
+    protected override async Task OnInitAsync()
+    {
+        Candidato = new Candidato();
+        Vaga = await VagasService.ObterVaga(IdVaga);
+    }
+}

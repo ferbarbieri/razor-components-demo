@@ -25,6 +25,8 @@ namespace RazorRecrutamento.Core.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Aprovado");
+
                     b.Property<DateTime>("DataRegistro");
 
                     b.Property<string>("Descricao");

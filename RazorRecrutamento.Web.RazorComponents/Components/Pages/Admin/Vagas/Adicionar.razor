@@ -1,0 +1,60 @@
+﻿@page "/Admin/Vagas/Adicionar"
+@inject VagasService VagasService
+@inject IUriHelper UriHelper
+
+
+<div class="container">
+
+    @if (!string.IsNullOrEmpty(Mensagem))
+    {
+        <div class="alert alert-info">@Mensagem</div>
+    }
+    else
+    {
+        <h1>Nova Vaga</h1>
+        <hr />
+
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="form-group">
+                    <label for="nome" class="control-label">Nome</label>
+                    <input class="form-control" bind="@Vaga.Nome" />
+                </div>
+                <div class="form-group">
+                    <label for="descricao" class="control-label">Descrição</label>
+                    <textarea class="form-control" bind="@Vaga.Descricao"></textarea>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="@Salvar">Salvar Vaga</button>
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div>
+        <a href="/Admin/Vagas">Voltar</a>
+    </div>
+
+</div>
+
+@functions{
+
+    Vaga Vaga;
+
+    string Mensagem { get; set; }
+
+    protected async Task Salvar()
+    {
+        await VagasService.AdicionarVaga(Vaga);
+        UriHelper.NavigateTo("/Admin/Vagas");
+    }
+
+    protected override void OnInit()
+    {
+        Vaga = new Vaga();
+    }
+
+
+}

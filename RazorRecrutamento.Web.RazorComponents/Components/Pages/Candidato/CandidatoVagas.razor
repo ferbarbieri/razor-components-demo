@@ -1,0 +1,59 @@
+﻿@page "/Vagas"
+@inject VagasService VagasService
+
+<div class="page-dark pattern">
+
+    <div class="container">
+
+        <h1>Acompanhe aqui nossas <strong>Oportunidades</strong> </h1>
+
+        @if (Vagas == null)
+        {
+            <p><em>Carregando...</em></p>
+        }
+        else
+        {
+
+            <div class="table-responsive">
+
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Cargo</th>
+                            <th>Descrição</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var vaga in Vagas)
+                        {
+                            <tr>
+                                <td>@vaga.Nome</td>
+                                <td>@vaga.Descricao</td>
+                                <td>
+                                    <a class="btn btn-blue btn-rounded" href="/Candidatar/@vaga.Id">Candidatar-se</a>
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+@functions{
+    List<Vaga> Vagas;
+
+    protected override async Task OnInitAsync()
+    {
+        Vagas = await VagasService.ListarVagas();
+    }
+
+    protected async Task Excluir(int id)
+    {
+        await VagasService.ExcluirVaga(id);
+        Vagas = await VagasService.ListarVagas();
+    }
+}

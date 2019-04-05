@@ -12,5 +12,6 @@ namespace RazorRecrutamento.Core.Model
         public string Descricao { get; set; }
         public string Email { get; set; }
         public Vaga Vaga { get; set; }
+        public bool Aprovado { get; set; }
     }
 }

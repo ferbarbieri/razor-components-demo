@@ -1,0 +1,97 @@
+﻿@page "/Admin/Candidatos/Editar/{Id:int}"
+@inject CandidatosService CandidatosService
+@inject VagasService VagasService
+@inject IUriHelper UriHelper
+
+<div class="container">
+
+    @if (!string.IsNullOrEmpty(Mensagem))
+    {
+        <div class="alert alert-danger">@Mensagem</div>
+    }
+
+    <h1>Editar Candidato: @Candidato.Nome</h1>
+
+    <div class="row">
+        <div class="col-md-5">
+
+            <div class="form-group">
+                <label for="nome" class="control-label">Nome</label>
+                <input class="form-control" bind="@Candidato.Nome" />
+            </div>
+            <div class="form-group">
+                <label for="email" class="control-label">Email</label>
+                <input class="form-control" bind="@Candidato.Email" />
+            </div>
+            <div class="form-group">
+                <label for="descricao" class="control-label">Descrição</label>
+                <textarea rows="10" class="form-control" bind="@Candidato.Descricao"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="Vaga" class="control-label">Vaga</label>
+                <select class="form-control" bind="@IdVagaSelecionada">
+                    <option value="0">-- Selecione a vaga --</option>
+                    @foreach (var vaga in Vagas)
+                    {
+                        <option value="@vaga.Id">@vaga.Nome</option>
+                    }
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="@Salvar">Salvar Candidato</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <a href="/Admin/Candidatos">Voltar</a>
+    </div>
+</div>
+@functions{
+
+    [Parameter]
+    int Id { get; set; }
+
+    Candidato Candidato;
+
+    int IdVagaSelecionada;
+
+    List<Vaga> Vagas = new List<Vaga>();
+
+    string Mensagem { get; set; }
+
+    protected async Task Salvar()
+    {
+        Vaga vaga = null;
+
+        if (IdVagaSelecionada == 0)
+        {
+            Mensagem = "Você deve selecionar uma vaga.";
+            return;
+        }
+
+        vaga = await VagasService.ObterVaga(IdVagaSelecionada);
+
+        Candidato.Vaga = vaga;
+
+        await CandidatosService.AtualizarCandidato(Candidato);
+        UriHelper.NavigateTo("/Admin/Candidatos");
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        Candidato = await CandidatosService.ObterCandidato(Id);
+        if (Candidato == null)
+        {
+            Mensagem = "Item não encontrado.";
+        }
+
+        IdVagaSelecionada = Candidato.Vaga.Id;
+
+        Vagas = await VagasService.ListarVagas();
+    }
+}

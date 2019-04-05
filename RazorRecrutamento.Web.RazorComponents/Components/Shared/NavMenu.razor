@@ -3,43 +3,43 @@
 @inject IHttpContextAccessor _httpContextAccessor
 
 
-    <div class="top-row pl-4 navbar navbar-dark">
-        <a class="navbar-brand" href="">Razor Comp.</a>
-        <button class="navbar-toggler" onclick="@ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark fixed-top bg-purple">
+    <div class="container">
+        <a class="navbar-brand" asp-page="/Index">
+            <img class="navbar-logo" src="/img/vsplogo_light.png" alt="Logo">
+        </a>
 
-    @if (_httpContextAccessor.HttpContext.User?.Identity?.Name != null)
-    {
 
-        <div class="@NavMenuCssClass" onclick="@ToggleNavMenu">
-            <ul class="nav flex-column">
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                        <span class="oi oi-home" aria-hidden="true"></span> Home
-                    </NavLink>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All" data-toggle="collapse">
+                    Home
+                </NavLink>
+            </li>
+            <li class="nav-item px-3">
+                <NavLink class="nav-link" href="vagas" data-toggle="collapse">
+                    Nossas Vagas
+                </NavLink>
+            </li>
+
+            @if (_httpContextAccessor.HttpContext.User?.Identity?.Name != null)
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Admin
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="/Admin/Vagas">Administrar Vagas</a>
+                        <a class="dropdown-item" href="/Admin/Candidatos">Ver Candidatos</a>
+                    </div>
                 </li>
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="counter">
-                        <span class="oi oi-plus" aria-hidden="true"></span> Counter
-                    </NavLink>
-                </li>
-                <li class="nav-item px-3">
-                    <NavLink class="nav-link" href="fetchdata">
-                        <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-                    </NavLink>
-                </li>
+            }
             </ul>
-        </div>
-    }
-    @functions {
-        bool collapseNavMenu = true;
 
-        string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
-        void ToggleNavMenu()
-        {
-            collapseNavMenu = !collapseNavMenu;
-        }
-    }
+        <ul class="navbar-nav ml-md-auto d-none d-lg-block d-xl-block">
+            <LoginControl />
+        </ul>
+    </div>
+</nav>
+

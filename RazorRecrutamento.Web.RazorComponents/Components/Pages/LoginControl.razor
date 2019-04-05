@@ -6,18 +6,28 @@
 
 @if (User.Identity.Name != null)
 {
-<img referrerPolicy="no-referrer" class="img-profile" src="@Avatar" />
-<b>Bem vindo @GivenName @Surname</b>
-<a class="ml-md-auto btn btn-primary"
-   href="/Logout"
-   target="_top">Logout</a>
+    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle " href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img referrerPolicy="no-referrer" class="img-profile" src="@Avatar" /> @GivenName @Surname
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="/Counter" target="_top">Meus Dados</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/Logout" target="_top">Logout</a>
+        </div>
+    </li>
 }
 else
 {
-<a class="ml-md-auto btn btn-primary"
-   href="/Login"
-   target="_top">Login</a>
+<li class="nav-item d-inline-block">
+    <a class="nav-link d-inline-block" href="/Login" target="_top">
+        <span class="text-light oi oi-person mr-2 "></span>
+        Login
+    </a>
+</li>
 }
+
 @functions {
     private ClaimsPrincipal User;
     private string GivenName;

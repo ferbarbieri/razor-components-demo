@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 
 using Microsoft.EntityFrameworkCore;
 using RazorRecrutamento.Core.Data;
+using RazorRecrutamento.Core.Services;
 
 namespace RazorRecrutamento.Web.RazorComponents
 {
@@ -44,9 +45,9 @@ namespace RazorRecrutamento.Web.RazorComponents
 
             services.AddRazorComponents();
 
-
+            services.AddScoped<VagasService, VagasService>();
+            services.AddScoped<CandidatosService, CandidatosService>();
             services.AddSingleton<WeatherForecastService>();
-
 
             // ***********************************************
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

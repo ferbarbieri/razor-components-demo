@@ -1,14 +1,13 @@
 ﻿@inherits LayoutComponentBase
-<div class="sidebar">
+
+<header class="bg-purple">
     <NavMenu />
-</div>
-<div class="main">
-    <div class="top-row px-4">
-        <!-- ******************************** -->
-        <LoginControl />
-        <!-- ******************************** -->
+</header>
+
+@Body
+
+<footer class="footer text-muted">
+    <div class="container">
+        &copy; 2019 - Lançamento Visual Studio 2019 - Demo Razor - <a asp-area="" asp-page="/Privacy">Privacidade</a>
     </div>
-    <div class="content px-4">
-        @Body
-    </div>
-</div>
+</footer>

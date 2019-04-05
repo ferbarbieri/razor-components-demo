@@ -1,0 +1,59 @@
+﻿@page "/Admin/Candidatos"
+@inject CandidatosService CandidatosService
+
+
+<div class="container">
+
+    <h1>Candidatos <a class="btn btn-primary float-right btn-rounded" href="/Admin/Candidatos/Adicionar">Novo Candidato</a></h1>
+
+
+    @if (Candidatos == null)
+    {
+        <p><em>Carregando...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Resumo</th>
+                    <th>Email</th>
+                    <th>Vaga</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var Candidato in Candidatos)
+                {
+                <tr>
+                    <td>@Candidato.Nome</td>
+                    <td>@Candidato.Descricao</td>
+                    <td>@Candidato.Email</td>
+                    <td>@Candidato.Vaga?.Nome</td>
+                    <td>
+                        <a class="btn btn-light btn-sm btn-rounded" href="/Admin/Candidatos/Editar/@Candidato.Id">Editar</a>
+                        <button class="btn btn-light btn-sm btn-rounded" onclick="@(async () =>{ await Excluir(Candidato.Id); })">Excluir</button>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+
+@functions{
+    List<Candidato> Candidatos;
+
+    protected override async Task OnInitAsync()
+    {
+        Candidatos = await CandidatosService.ListarCandidatos();
+    }
+
+    protected async Task Excluir(int id)
+    {
+        await CandidatosService.ExcluirCandidato(id);
+        Candidatos = await CandidatosService.ListarCandidatos();
+    }
+}
