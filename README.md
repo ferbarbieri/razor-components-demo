@@ -1,4 +1,4 @@
-# RazorRecrutamento
+# Razor Recrutamento
 Projeto com alguns testes do Razor Components
 
 * Visual Studio 2019
@@ -6,7 +6,9 @@ Projeto com alguns testes do Razor Components
 * Razor Components
 * EF Core
 * Autenticação com Google
+* (novo) Front Blazor
 
+O projeto Blazor foi só pra fazer um teste. Não está com todas as funcionalidades, apenas um CRUD de Vagas usando o mesmo core do projeto Razor Components.
 
 ## Requisitos
 
