@@ -279,3 +279,20 @@ img {
     margin-right: 10px;
     border-radius: 40px;
 }
+
+.box-pesquisa{
+    width: 380px;
+    float: right;
+    margin-top: -50px;
+}
+
+
+.text-white .form-control {
+    border-color: transparent;
+    background: rgba(0, 0, 0, 0.1);
+    color: #fff;
+}
+
+::placeholder {
+    color: #7655ad !important;
+}

@@ -1,0 +1,50 @@
+﻿@page "/Admin/Vagas/Adicionar"
+@using RazorRecrutamento.Web.Blazor.Shared
+@using Microsoft.AspNetCore.Components.Services
+@inject IUriHelper UriHelper
+@inject HttpClient Http
+
+<div class="container">
+
+    @if (!string.IsNullOrEmpty(Mensagem))
+    {
+        <div class="alert alert-warning">@Mensagem</div>
+    }
+
+    <h1>Nova vaga: @Vaga.Nome</h1>
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <div class="form-group">
+                <label for="nome" class="control-label">Nome</label>
+                <input class="form-control" bind="@Vaga.Nome" />
+            </div>
+            <div class="form-group">
+                <label for="descricao" class="control-label">Descrição</label>
+                <textarea class="form-control" bind="@Vaga.Descricao"></textarea>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary" onclick="@Salvar">Salvar Vaga</button>
+            </div>
+
+        </div>
+    </div>
+
+    <div>
+        <a href="/Admin/Vagas">Voltar</a>
+    </div>
+</div>
+@functions{
+
+    VagaDTO Vaga = new VagaDTO();
+
+    string Mensagem { get; set; }
+
+    protected async Task Salvar()
+    {
+        await Http.PostJsonAsync<VagaDTO>("api/Vagas", Vaga);
+        UriHelper.NavigateTo("/Admin/Vagas");
+    }
+
+}

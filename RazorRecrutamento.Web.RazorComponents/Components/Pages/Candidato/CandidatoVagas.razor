@@ -5,7 +5,7 @@
 
     <div class="container">
 
-        <h1>Acompanhe aqui nossas <strong>Oportunidades</strong> </h1>
+        <h1>Acompanhe nossas <strong>Oportunidades</strong> </h1>
 
         @if (Vagas == null)
         {
@@ -13,8 +13,15 @@
         }
         else
         {
+            
+            <div class="input-group mb-1 text-white box-pesquisa d-none d-lg-flex d-xl-flex">
+                <input type="text" class="form-control px-3" placeholder="Pesquisar Vagas" value="@filtro" onchange="@Filtrar" />
+                <div class="input-group-append">
+                    <button class="btn btn-white" type="button"><i class="oi oi-magnifying-glass"></i> Pesquisar</button>
+                </div>
+            </div>
 
-            <div class="table-responsive">
+            <div class="table-responsive mt-5">
 
                 <table class="table table-striped">
                     <thead>
@@ -45,6 +52,14 @@
 </div>
 @functions{
     List<Vaga> Vagas;
+
+    string filtro = string.Empty;
+
+    async Task Filtrar(UIChangeEventArgs evt)
+    {
+        filtro = (string)evt.Value;
+        Vagas = await VagasService.ListarVagas(filtro);
+    }
 
     protected override async Task OnInitAsync()
     {
