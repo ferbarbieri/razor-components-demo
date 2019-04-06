@@ -1,41 +1,43 @@
 ﻿@page "/Admin/Vagas"
 @inject VagasService VagasService
+@inject IJSRuntime jsRuntime
 
-    <div class="container">
+<div class="container">
 
-        <h1>Vagas <a class="btn btn-primary float-right btn-rounded" href="/Admin/Vagas/Adicionar">Nova vaga</a></h1>
+    <h1>Vagas <a class="btn btn-primary float-right btn-rounded" href="/Admin/Vagas/Adicionar">Nova vaga</a></h1>
 
-        @if (Vagas == null)
-        {
-            <p><em>Carregando...</em></p>
-        }
-        else
-        {
-            <table class="table">
-                <thead>
+    @if (Vagas == null)
+    {
+        <p><em>Carregando...</em></p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vaga in Vagas)
+                {
                     <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th></th>
+                        <td>@vaga.Nome</td>
+                        <td>@vaga.Descricao</td>
+                        <td>
+                            <a class="btn btn-light btn-sm btn-rounded" href="/Admin/Vagas/Editar/@vaga.Id">Editar</a>
+                            <button class="btn btn-light btn-sm btn-rounded" onclick="@(async () =>{ await Excluir(vaga.Id); })">Excluir</button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var vaga in Vagas)
-                    {
-                        <tr>
-                            <td>@vaga.Nome</td>
-                            <td>@vaga.Descricao</td>
-                            <td>
-                                <a class="btn btn-light btn-sm btn-rounded" href="/Admin/Vagas/Editar/@vaga.Id">Editar</a>
-                                <button class="btn btn-light btn-sm btn-rounded" onclick="@(async () =>{ await Excluir(vaga.Id); })">Excluir</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        }
+                }
+            </tbody>
+        </table>
+    }
 
-    </div>
+</div>
+
 
 @functions{
     List<Vaga> Vagas;
@@ -47,7 +49,14 @@
 
     protected async Task Excluir(int id)
     {
-        await VagasService.ExcluirVaga(id);
-        Vagas = await VagasService.ListarVagas();
+        // Interop com javascript
+        var confirm = await jsRuntime.InvokeAsync<bool>("confirmarExclusao", "Tem certeza que deseja excluir?");
+
+        if (confirm)
+        {
+            await VagasService.ExcluirVaga(id);
+            Vagas = await VagasService.ListarVagas();
+        }
     }
 }
+
