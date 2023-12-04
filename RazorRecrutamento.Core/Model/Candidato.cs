@@ -6,6 +6,7 @@ namespace RazorRecrutamento.Core.Model
 {
     public class Candidato
     {
+        // ID do candidato
         public int Id { get; set; }
         public string Nome { get; set; }
         public DateTime DataRegistro { get; set; }
